@@ -32,8 +32,8 @@ public class PlayerController_MainGun : MonoBehaviour, IPlayerController
         Cannon = Turret.GetComponent(typeof(MainGun)) as MainGun;
         
         spawnPoint = Cannon.SpawnPoint;
-        bulletObject = Resources.Load("Ball", typeof(GameObject)) as GameObject;
-        fireEffect = Resources.Load("FireEffect", typeof(GameObject)) as GameObject;
+        bulletObject = Resources.Load("Bullet", typeof(GameObject)) as GameObject;
+        fireEffect = Resources.Load("FireEffect_MainGun", typeof(GameObject)) as GameObject;
     }
 
     public void ProcessKeyboardInput()

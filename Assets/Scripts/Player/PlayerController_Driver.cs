@@ -8,8 +8,8 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
 
     #region Class Level Variables
 
-    MoveTrack leftTrack;
-    MoveTrack rightTrack;
+    MainTrack leftTrack;
+    MainTrack rightTrack;
 
     public float acceleration = 5;
 
@@ -174,8 +174,8 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
 
     public void SetupTracks(GameObject gameObj)
     {
-        leftTrack = GameObject.Find(gameObj.name + "/Lefttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
-        rightTrack = GameObject.Find(gameObj.name + "/Righttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
+        leftTrack = GameObject.Find(gameObj.name + "/Lefttrack").GetComponent(typeof(MainTrack)) as MainTrack;
+        rightTrack = GameObject.Find(gameObj.name + "/Righttrack").GetComponent(typeof(MainTrack)) as MainTrack;
     }
     #endregion Publc Methods
 
