@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class PlayerController_Driver : MonoBehaviour, IPlayerController
+public class PlayerController_Driver : IPlayerController
 {
 
     #region Class Level Variables
@@ -16,6 +16,7 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
     public float maxSpeed = 25;
 
     public float rotationSpeed = 30;
+    private GameObject playerObject;
 
     #endregion
 
@@ -24,21 +25,13 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
     /// Use this for initialization
     /// </summary>
     // Instiate Tank Tracks
-    void Start()
+    public PlayerController_Driver(GameObject gameObject)
     {
-        //Might not need these, we'll see
+        playerObject = gameObject;
         // Get Track Controls
         leftTrack = GameObject.Find(gameObject.name + "/Lefttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
         rightTrack = GameObject.Find(gameObject.name + "/Righttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
 
-    }
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    // TODO: Breaking seperate methods
-    void Update()
-    {
     }
 
     #endregion Unity Methods
@@ -77,7 +70,7 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
             currentVelocity = 0;
 
         // Move Tank by currentVelocity
-        transform.Translate(new Vector3(0, 0, currentVelocity * Time.deltaTime));
+        playerObject.transform.Translate(new Vector3(0, 0, currentVelocity * Time.deltaTime));
 
         // Move Tracks by currentVelocity	 
         if (currentVelocity > 0)
@@ -110,7 +103,7 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 // Turn right
-                transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+                playerObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
 
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 1;
@@ -121,7 +114,7 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
             else
             {
                 // Turn left
-                transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+                playerObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
 
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 2;
@@ -136,7 +129,7 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 // Turn left
-                transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+                playerObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 2;
                 rightTrack.speed = rotationSpeed;
@@ -146,7 +139,7 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
             else
             {
                 // Turn right
-                transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+                playerObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 1;
                 rightTrack.speed = rotationSpeed;
