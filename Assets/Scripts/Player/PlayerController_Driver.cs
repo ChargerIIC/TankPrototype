@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class PlayerController_Driver : IPlayerController
+public class PlayerController_Driver : MonoBehaviour
 {
 
     #region Class Level Variables
@@ -25,7 +25,7 @@ public class PlayerController_Driver : IPlayerController
     /// Use this for initialization
     /// </summary>
     // Instiate Tank Tracks
-    public PlayerController_Driver(GameObject gameObject)
+    void Start()
     {
         playerObject = gameObject;
         // Get Track Controls
@@ -34,6 +34,10 @@ public class PlayerController_Driver : IPlayerController
 
     }
 
+    void Update()
+    {
+        
+    }
     #endregion Unity Methods
 
     #region Public Methods
