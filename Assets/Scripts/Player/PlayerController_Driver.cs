@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class PlayerController_Driver : MonoBehaviour
+[Serializable]
+public class PlayerController_Driver : MonoBehaviour, IPlayerController
 {
 
     #region Class Level Variables
@@ -16,27 +17,34 @@ public class PlayerController_Driver : MonoBehaviour
     public float maxSpeed = 25;
 
     public float rotationSpeed = 30;
-    private GameObject playerObject;
 
     #endregion
 
+    public PlayerController_Driver()
+    {
+    }
+
     #region Unity Methods
+
     /// <summary>
     /// Use this for initialization
     /// </summary>
     // Instiate Tank Tracks
+    void Awake()
+    {
+        // Get Track Controls
+        //leftTrack = GameObject.Find(gameObject.name + "/leftTrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
+        //rightTrack = GameObject.Find(gameObject.name + "/rightTrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
+    }
+
     void Start()
     {
-        playerObject = gameObject;
-        // Get Track Controls
-        leftTrack = GameObject.Find(gameObject.name + "/Lefttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
-        rightTrack = GameObject.Find(gameObject.name + "/Righttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
 
     }
 
     void Update()
     {
-        
+        ProcessKeyboardInput();
     }
     #endregion Unity Methods
 
@@ -44,14 +52,14 @@ public class PlayerController_Driver : MonoBehaviour
 
     public void ProcessKeyboardInput()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W))
         {
             // plus speed
             if (currentVelocity <= maxSpeed)
                 currentVelocity += acceleration * Time.deltaTime;
 
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.S))
         {
             // minus speed
             if (currentVelocity >= -maxSpeed)
@@ -74,7 +82,7 @@ public class PlayerController_Driver : MonoBehaviour
             currentVelocity = 0;
 
         // Move Tank by currentVelocity
-        playerObject.transform.Translate(new Vector3(0, 0, currentVelocity * Time.deltaTime));
+        gameObject.transform.Translate(new Vector3(0, 0, currentVelocity * Time.deltaTime));
 
         // Move Tracks by currentVelocity	 
         if (currentVelocity > 0)
@@ -102,12 +110,12 @@ public class PlayerController_Driver : MonoBehaviour
 
 
         // Turn Tank
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
-            if (Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.S))
             {
                 // Turn right
-                playerObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+                gameObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
 
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 1;
@@ -118,7 +126,7 @@ public class PlayerController_Driver : MonoBehaviour
             else
             {
                 // Turn left
-                playerObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+                gameObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
 
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 2;
@@ -128,12 +136,12 @@ public class PlayerController_Driver : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.S))
             {
                 // Turn left
-                playerObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+                gameObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 2;
                 rightTrack.speed = rotationSpeed;
@@ -143,7 +151,7 @@ public class PlayerController_Driver : MonoBehaviour
             else
             {
                 // Turn right
-                playerObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+                gameObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 1;
                 rightTrack.speed = rotationSpeed;
@@ -163,5 +171,17 @@ public class PlayerController_Driver : MonoBehaviour
     {
 
     }
+
+    public void SetupTracks(GameObject gameObj)
+    {
+        leftTrack = GameObject.Find(gameObj.name + "/Lefttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
+        rightTrack = GameObject.Find(gameObj.name + "/Righttrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
+    }
     #endregion Publc Methods
+
+    #region Public Properties
+
+
+    #endregion Public Properties
+
 }
