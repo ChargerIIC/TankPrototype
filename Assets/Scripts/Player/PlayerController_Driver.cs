@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.Networking;
 
 [Serializable]
-public class PlayerController_Driver : MonoBehaviour, IPlayerController
+public class PlayerController_Driver : NetworkBehaviour, IPlayerController
 {
 
     #region Class Level Variables
@@ -32,14 +33,16 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
     // Instiate Tank Tracks
     void Awake()
     {
-        // Get Track Controls
-        //leftTrack = GameObject.Find(gameObject.name + "/leftTrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
-        //rightTrack = GameObject.Find(gameObject.name + "/rightTrack").GetComponent(typeof(MoveTrack)) as MoveTrack;
     }
 
     void Start()
     {
 
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        GameObject.Find(gameObject.name + "/body").GetComponent<MeshRenderer>().material.color = Color.red;
     }
 
     void Update()
@@ -52,6 +55,9 @@ public class PlayerController_Driver : MonoBehaviour, IPlayerController
 
     public void ProcessKeyboardInput()
     {
+        if (!isLocalPlayer)
+            return;
+
         if (Input.GetKey(KeyCode.W))
         {
             // plus speed

@@ -2,9 +2,9 @@
 using System.Collections;
 using System;
 using System.Runtime.Serialization;
-using UnityEditor;
+using UnityEngine.Networking;
 
-public class PlayerController_MainGun : MonoBehaviour, IPlayerController
+public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
 {
     public Transform spawnPoint;
     public GameObject bulletObject;
@@ -38,6 +38,9 @@ public class PlayerController_MainGun : MonoBehaviour, IPlayerController
 
     public void ProcessKeyboardInput()
     {
+        if (!isLocalPlayer)
+            return;
+
         // Fire!
         if (Input.GetButtonDown("Fire1"))
         {
@@ -45,7 +48,8 @@ public class PlayerController_MainGun : MonoBehaviour, IPlayerController
             Instantiate(fireEffect, spawnPoint.position, spawnPoint.rotation);
 
             // make ball
-            Instantiate(bulletObject, spawnPoint.position, spawnPoint.rotation);
+            var bullet = Instantiate(bulletObject, spawnPoint.position, spawnPoint.rotation);
+            NetworkServer.Spawn(bullet);
         }
 
         // Turn Right
