@@ -4,13 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
-public class PlayerObject : MonoBehaviour {
+public class PlayerObject : MonoBehaviour
+{
+    #region Class Level Variables
 
-	// Use this for initialization
-	void Start ()
+    private Camera ThirdPersonCamera;
+    private Camera DriverCamera;
+    private Camera MainGunCamera;
+
+    #endregion Class Level Variables
+
+    #region Unity Methods
+
+    // Use this for initialization
+    void Start ()
 	{
 	    ActiveController = typeof(PlayerController_Driver);
-	    SwitchRoles(PlayerRole.Driver);
+	    var cameras = gameObject.GetComponentsInChildren<Camera>();
+	    ThirdPersonCamera = cameras.First(x => x.name == "ThirdPartyCamera");
+        DriverCamera = cameras.First(x => x.name == "DriverCamera");
+        MainGunCamera = cameras.First(x => x.name == "MainGunCamera");
+
+        SwitchRoles(PlayerRole.Driver);
 	}
 
     // Update is called once per frame
@@ -26,6 +41,10 @@ public class PlayerObject : MonoBehaviour {
         }
 
     }
+
+    #endregion Unity Methods
+
+    #region Public Methods
 
     public bool SwitchRoles(PlayerRole role)
     {
@@ -43,11 +62,17 @@ public class PlayerObject : MonoBehaviour {
                 var driverController = this.gameObject.AddComponent<PlayerController_Driver>();
                 driverController.SetupTracks(gameObject);
                 ActiveController = typeof(PlayerController_Driver);
+                ThirdPersonCamera.enabled = false;
+                DriverCamera.enabled = true;
+                MainGunCamera.enabled = false;
                 break;
             case PlayerRole.MainGun:
                 var mainGunController = this.gameObject.AddComponent<PlayerController_MainGun>();
                 mainGunController.SetupMainGun(gameObject);
                 ActiveController = typeof(PlayerController_MainGun);
+                ThirdPersonCamera.enabled = false;
+                DriverCamera.enabled = false;
+                MainGunCamera.enabled = true;
                 break;
             default:
                 break;
@@ -56,6 +81,12 @@ public class PlayerObject : MonoBehaviour {
         return result;
     }
 
+    #endregion Public Methods
+
+    #region Public Properties
+
     public System.Type ActiveController;
+
+    #endregion Public Properties
 
 }

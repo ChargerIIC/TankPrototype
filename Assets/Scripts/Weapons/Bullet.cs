@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour
 
     private float dist;
 
-
     #endregion Class Level Variables
 
     // Use this for initialization
