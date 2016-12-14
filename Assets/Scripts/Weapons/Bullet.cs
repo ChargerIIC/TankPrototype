@@ -34,7 +34,8 @@ public class Bullet : NetworkBehaviour
         // If reach to my range, Destroy. 
         if (dist >= range)
         {
-            Instantiate(ExploPtcl, transform.position, transform.rotation);
+            var spclEft = Instantiate(ExploPtcl, transform.position, transform.rotation);
+            NetworkServer.Spawn(spclEft);
             Destroy(gameObject);
         }
     }

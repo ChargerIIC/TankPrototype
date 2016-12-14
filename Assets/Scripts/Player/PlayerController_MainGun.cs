@@ -9,7 +9,7 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
     public Transform spawnPoint;
     public GameObject bulletObject;
     public GameObject fireEffect;
-    private GameObject Turret;
+    private Transform Turret;
     private MainGun Cannon;
 
     public float turretSpeed = 30f;
@@ -28,8 +28,9 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
 
     public void SetupMainGun(GameObject gameObj)
     {
-        Turret = GameObject.Find(gameObject.name + "/Turret");
-        Cannon = Turret.GetComponent(typeof(MainGun)) as MainGun;
+        Cannon = this.GetComponentInChildren<MainGun>(); //GameObject.Find(gameObject.name + "/Turret").gameObject;
+        Turret = Cannon.gameObject.transform;
+        //Cannon = Turret.gameObject.GetComponent(typeof(MainGun)) as MainGun;
         
         spawnPoint = Cannon.SpawnPoint;
         bulletObject = Resources.Load("Bullet", typeof(GameObject)) as GameObject;
