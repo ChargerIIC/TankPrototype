@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Destroyable : MonoBehaviour
+public class Destroyable : NetworkBehaviour
 {
+    [SyncVar]
     public int Health = 50;
 
     // Use this for initialization
