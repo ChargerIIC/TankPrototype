@@ -23,14 +23,19 @@ Platform assembly: C:\Users\Charg\Documents\Git\TankPrototype\TankPrototype_Data
 Loading C:\Users\Charg\Documents\Git\TankPrototype\TankPrototype_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
 Platform assembly: C:\Users\Charg\Documents\Git\TankPrototype\TankPrototype_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
 Loading C:\Users\Charg\Documents\Git\TankPrototype\TankPrototype_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-- Completed reload, in  0.096 seconds
+- Completed reload, in  0.093 seconds
 Platform assembly: C:\Users\Charg\Documents\Git\TankPrototype\TankPrototype_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Charg\Documents\Git\TankPrototype\TankPrototype_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 2.388547 ms
+UnloadTime: 1.425382 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 1fe8 -> priority: 1 
-  Thread -> id: 4318 -> priority: 1 
+  Thread -> id: 2a2c -> priority: 1 
+  Thread -> id: 36a4 -> priority: 1 
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:61320}
+ServerDisconnected due to error: Timeout
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+

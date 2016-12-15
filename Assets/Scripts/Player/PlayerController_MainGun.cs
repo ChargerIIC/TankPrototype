@@ -28,9 +28,9 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
 
     public void SetupMainGun(GameObject gameObj)
     {
-        Cannon = this.GetComponentInChildren<MainGun>(); //GameObject.Find(gameObject.name + "/Turret").gameObject;
+        Tank = gameObj;
+        Cannon = Tank.GetComponentInChildren<MainGun>(); 
         Turret = Cannon.gameObject.transform;
-        //Cannon = Turret.gameObject.GetComponent(typeof(MainGun)) as MainGun;
         
         spawnPoint = Cannon.SpawnPoint;
         bulletObject = Resources.Load("Bullet", typeof(GameObject)) as GameObject;
@@ -39,8 +39,6 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
 
     public void ProcessKeyboardInput()
     {
-        if (!isLocalPlayer)
-            return;
 
         // Fire!
         if (Input.GetButtonDown("Fire1"))
@@ -90,4 +88,10 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
     public void UpdateGameObject()
     {
     }
+
+    #region Public Properties
+
+    public GameObject Tank;
+
+    #endregion Public Properties
 }

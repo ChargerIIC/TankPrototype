@@ -40,11 +40,6 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
 
     }
 
-    public override void OnStartLocalPlayer()
-    {
-        GameObject.Find(gameObject.name + "/body").GetComponent<MeshRenderer>().material.color = Color.red;
-    }
-
     void Update()
     {
         ProcessKeyboardInput();
@@ -55,8 +50,8 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
 
     public void ProcessKeyboardInput()
     {
-        if (!isLocalPlayer)
-            return;
+        //if (!isLocalPlayer)
+        //    return;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -88,7 +83,7 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
             currentVelocity = 0;
 
         // Move Tank by currentVelocity
-        gameObject.transform.Translate(new Vector3(0, 0, currentVelocity * Time.deltaTime));
+        Tank.transform.Translate(new Vector3(0, 0, currentVelocity * Time.deltaTime));
 
         // Move Tracks by currentVelocity	 
         if (currentVelocity > 0)
@@ -121,7 +116,7 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
             if (Input.GetKey(KeyCode.S))
             {
                 // Turn right
-                gameObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+                Tank.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
 
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 1;
@@ -132,7 +127,7 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
             else
             {
                 // Turn left
-                gameObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+                Tank.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
 
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 2;
@@ -147,7 +142,7 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
             if (Input.GetKey(KeyCode.S))
             {
                 // Turn left
-                gameObject.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
+                Tank.transform.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 2;
                 rightTrack.speed = rotationSpeed;
@@ -157,7 +152,7 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
             else
             {
                 // Turn right
-                gameObject.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+                Tank.transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
                 leftTrack.speed = rotationSpeed;
                 leftTrack.GearStatus = 1;
                 rightTrack.speed = rotationSpeed;
@@ -180,6 +175,7 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
 
     public void SetupTracks(GameObject gameObj)
     {
+        Tank = gameObj;
         leftTrack = GameObject.Find(gameObj.name + "/Lefttrack").GetComponent(typeof(MainTrack)) as MainTrack;
         rightTrack = GameObject.Find(gameObj.name + "/Righttrack").GetComponent(typeof(MainTrack)) as MainTrack;
     }
@@ -187,6 +183,7 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
 
     #region Public Properties
 
+    public GameObject Tank;
 
     #endregion Public Properties
 
