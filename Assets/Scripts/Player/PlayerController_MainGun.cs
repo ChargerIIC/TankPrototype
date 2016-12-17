@@ -39,6 +39,9 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
 
     public void ProcessKeyboardInput()
     {
+        //var networkId = gameObject.GetComponent<NetworkIdentity>();
+        //if (!networkId.isLocalPlayer)
+        //    return;
 
         // Fire!
         if (Input.GetButtonDown("Fire1"))

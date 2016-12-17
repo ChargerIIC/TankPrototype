@@ -50,7 +50,8 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
 
     public void ProcessKeyboardInput()
     {
-        //if (!isLocalPlayer)
+        //var networkId = gameObject.GetComponent<NetworkIdentity>();
+        //if (!networkId.isLocalPlayer)
         //    return;
 
         if (Input.GetKey(KeyCode.W))

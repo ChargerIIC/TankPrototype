@@ -10,9 +10,9 @@ public class PlayerObject : NetworkBehaviour
 {
     #region Class Level Variables
 
-    private Camera ThirdPersonCamera;
-    private Camera DriverCamera;
-    private Camera MainGunCamera;
+    private GameObject ThirdPersonCamera;
+    private GameObject DriverCamera;
+    private GameObject MainGunCamera;
 
     #endregion Class Level Variables
 
@@ -21,29 +21,48 @@ public class PlayerObject : NetworkBehaviour
     // Use this for initialization
     void Start ()
 	{
-	    //ActiveController = typeof(PlayerController_Driver);
-	    var cameras = gameObject.GetComponentsInChildren<Camera>();
-	    ThirdPersonCamera = cameras.First(x => x.name == "ThirdPartyCamera");
-        DriverCamera = cameras.First(x => x.name == "DriverCamera");
-        MainGunCamera = cameras.First(x => x.name == "MainGunCamera");
+	    ThirdPersonCamera = GameObject.Find("ThirdPartyCamera");
+        DriverCamera = GameObject.Find("DriverCamera");
+        MainGunCamera = GameObject.Find("MainGunCamera");
 
 	}
 
     // Update is called once per frame
     void Update ()
     {
-        //if (Input.GetKeyUp(KeyCode.F2))
-        //{
-        //    SwitchRoles(PlayerRole.Driver);
-        //}
-        //else if (Input.GetKeyUp(KeyCode.F3))
-        //{
-        //    SwitchRoles(PlayerRole.MainGun);
-        //}
 
     }
 
     #endregion Unity Methods
+
+    #region Private Methods
+
+    private void postiionCamera(GameObject player, PlayerRole role)
+    {
+        var p = player.GetComponent<Player>();
+        if(Players[role] == player)
+        {
+            switch (role)
+            {
+                case PlayerRole.Driver:
+                    p.transform.SetParent(DriverCamera.transform);
+                    p.transform.localPosition = new Vector3(0, 0, 0);
+                    p.transform.Rotate(13.29f, 0, 0, 0);
+
+                    break;
+                case PlayerRole.MainGun:
+                    p.transform.SetParent(MainGunCamera.transform);
+                    p.transform.localPosition = new Vector3(0, 0, 0);
+                    p.transform.Rotate(0, 0, 0, 0);
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    #endregion Private Methods
 
     #region Public Methods
 
@@ -83,35 +102,31 @@ public class PlayerObject : NetworkBehaviour
 
     public void AddPlayer(GameObject player, PlayerRole role)
     {
-        player.transform.parent = gameObject.transform;
-        
-            if (role == PlayerRole.None && Players.Any(kvp => kvp.Value == null))
-            {
-                role = Players.First(kvp => kvp.Value == null).Key;
-            }
 
-            Players[role] = player;
-            switch (role)
-            {
-                case PlayerRole.Driver:
-                    var driverController = player.AddComponent<PlayerController_Driver>();
-                    driverController.SetupTracks(gameObject);
+        if (role == PlayerRole.None && Players.Any(kvp => kvp.Value == null))
+        {
+            role = Players.First(kvp => kvp.Value == null).Key;
+        }
 
-                    ThirdPersonCamera.enabled = false;
-                    DriverCamera.enabled = true;
-                    MainGunCamera.enabled = false;
-                    break;
-                case PlayerRole.MainGun:
-                    var mainGunController = player.AddComponent<PlayerController_MainGun>();
-                    mainGunController.SetupMainGun(gameObject);
-                    ThirdPersonCamera.enabled = false;
-                    DriverCamera.enabled = false;
-                    MainGunCamera.enabled = true;
-                    break;
-                default:
-                    break;
-            }
-       
+        Players[role] = player;
+        switch (role)
+        {
+            case PlayerRole.Driver:
+                var driverController = player.AddComponent<PlayerController_Driver>();
+                driverController.SetupTracks(gameObject);
+
+                postiionCamera(player, PlayerRole.Driver);
+                break;
+            case PlayerRole.MainGun:
+                var mainGunController = player.AddComponent<PlayerController_MainGun>();
+                mainGunController.SetupMainGun(gameObject);
+
+                postiionCamera(player, PlayerRole.MainGun);
+                break;
+            default:
+                break;
+        }
+
     }
 
     #endregion Public Methods
