@@ -23,7 +23,7 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
 	// Update is called once per frame
 	void Update ()
     {
-        ProcessKeyboardInput();
+        CmdProcessKeyboardInput();
     }
 
     public void SetupMainGun(GameObject gameObj)
@@ -37,11 +37,11 @@ public class PlayerController_MainGun : NetworkBehaviour, IPlayerController
         fireEffect = Resources.Load("FireEffect_MainGun", typeof(GameObject)) as GameObject;
     }
 
-    public void ProcessKeyboardInput()
+    [Command]
+    public void CmdProcessKeyboardInput()
     {
-        //var networkId = gameObject.GetComponent<NetworkIdentity>();
-        //if (!networkId.isLocalPlayer)
-        //    return;
+        if (!isLocalPlayer)
+            return;
 
         // Fire!
         if (Input.GetButtonDown("Fire1"))

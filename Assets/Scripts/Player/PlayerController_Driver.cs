@@ -42,17 +42,15 @@ public class PlayerController_Driver : NetworkBehaviour, IPlayerController
 
     void Update()
     {
-        ProcessKeyboardInput();
+        CmdProcessKeyboardInput();
     }
     #endregion Unity Methods
 
     #region Public Methods
 
-    public void ProcessKeyboardInput()
+    [Command]
+    public void CmdProcessKeyboardInput()
     {
-        //var networkId = gameObject.GetComponent<NetworkIdentity>();
-        //if (!networkId.isLocalPlayer)
-        //    return;
 
         if (Input.GetKey(KeyCode.W))
         {

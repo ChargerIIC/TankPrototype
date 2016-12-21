@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 public interface IPlayerController
 {
 
-    void ProcessKeyboardInput();
+    void CmdProcessKeyboardInput();
 
     void ProcessMouseInput();
 
