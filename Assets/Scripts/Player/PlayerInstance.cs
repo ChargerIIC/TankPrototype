@@ -22,7 +22,7 @@ public class PlayerInstance : NetworkBehaviour
         if (!isLocalPlayer)
         {
             disableUneededComponents();
-            //gameObject.layer = LayerMask.NameToLayer("Remote"); //TODO: Pull from common singleton so magic string is shared
+            gameObject.layer = LayerMask.NameToLayer("Remote"); //TODO: Pull from common resource so magic string is shared
         }
         else
         {
@@ -67,35 +67,6 @@ public class PlayerInstance : NetworkBehaviour
     public void Initialize()
     {
         
-    }
-
-    public void SetRole(PlayerRole role)
-    {
-        Debug.Log("Setting role: " + role.ToString() + ":"+ gameObject.name);
-        Role = role;
-        //Set Camera Location
-        //Add Controller
-        switch (role)
-        {
-            case PlayerRole.Driver:
-                transform.SetParent(DriverCameraPos.transform);
-                transform.localPosition = new Vector3(0, 0, 0);
-                transform.Rotate(13.29f, 0, 0, 0);
-                var driverController = gameObject.AddComponent<PlayerController_Driver>();
-                driverController.SetupTracks(TankGameObject);
-
-                break;
-            case PlayerRole.MainGun:
-                transform.SetParent(MainGunCameraPos.transform);
-                transform.localPosition = new Vector3(0, 0, 0);
-                transform.Rotate(0, 0, 0, 0);
-
-                var mainGunController = gameObject.AddComponent<PlayerController_MainGun>();
-                mainGunController.SetupMainGun(TankGameObject);
-                break;
-            default:
-                break;
-        }
     }
 
     #endregion Public Methods

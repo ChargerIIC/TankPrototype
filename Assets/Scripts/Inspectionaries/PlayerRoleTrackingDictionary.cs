@@ -4,4 +4,4 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class PlayerRoleTrackingDictionary : System.Collections.Generic.SerializableDictionary<PlayerRole, int> {}
+public class PlayerRoleTrackingDictionary : System.Collections.Generic.SerializableDictionary<PlayerRole, string> {}
