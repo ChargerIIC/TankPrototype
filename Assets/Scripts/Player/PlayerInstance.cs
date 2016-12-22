@@ -22,7 +22,7 @@ public class PlayerInstance : NetworkBehaviour
         if (!isLocalPlayer)
         {
             disableUneededComponents();
-            gameObject.layer = LayerMask.NameToLayer("Remote"); //TODO: Pull from common singleton so magic string is shared
+            //gameObject.layer = LayerMask.NameToLayer("Remote"); //TODO: Pull from common singleton so magic string is shared
         }
         else
         {
@@ -32,8 +32,6 @@ public class PlayerInstance : NetworkBehaviour
                 sceneCamera.gameObject.SetActive(false);
 
             // Disable player graphics for local player
-
-            //Set Role
 
             // Create Player UI
 
@@ -56,7 +54,6 @@ public class PlayerInstance : NetworkBehaviour
     
     private void disableUneededComponents()
     {
-        //playerController.enabled = false;
         Camera.enabled = false;
     }
 
